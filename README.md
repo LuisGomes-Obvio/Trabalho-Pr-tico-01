@@ -47,3 +47,19 @@ namespace TheTirelessLilAnt
     }
 }
 ```
+
+IGameObject é uma interface que permite, individualmente, atribuir a todos os objetos do uma jogo os mesmos tipos de características representados em baixo:
+Posição;    ```csharp   Vector2 Position { get; set; } ```
+Velocidade;    ```Vector2 Velocity { get; set; }```
+Direção;    ```Vector2 Direction { get; set; } ```
+Rotação;    ```float Rotation { get;} ```
+Ponto de Origem;    ```Vector2 Origin { get; set; } ```
+Tamanho do Sprite;    ```csharp    
+                       int Height { get; } 
+                        int Width { get; }
+                    ```
+Visibilidade;    ```csharp   bool Visible { get; set; } ```
+
+Além disso possui uma série de métodos ou instruções que permitem carregar conteúdos, atualizar o estado dos objetos, desenhá-los no ecrã e lidar com comandos do jogador.
+
+Isto facilita a organização do código e permite que os objetos do jogo funcionem de uma maneira consistente.
