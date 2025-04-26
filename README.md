@@ -776,7 +776,7 @@ namespace TheTirelessLilAnt.GameEntitites
  ```
   
 - Modo de ir para casa - Após encontrar a folha e alcançá-la a formiga volta para casa armazenar a folha assim ganhando um ponto, se esta vir o jogador está perto,  ela ganha velocidade;
-  ```csharp
+```csharp
   private void GoHomeState(GameTime gameTime)
     {
       LookAt(_home.Position);
@@ -790,7 +790,7 @@ namespace TheTirelessLilAnt.GameEntitites
         _currentStateAction = WaitState;
       }
     }
-  ```
+```
 - Modo de espera - A formiga fica parada à espera a observar o rato do jogador se este estiver perto ela entra no modo de fugir, caso contrário depois de 1.2 segundos ela entra no modo procurar a folha;
 
 ```csharp
@@ -815,7 +815,7 @@ namespace TheTirelessLilAnt.GameEntitites
 
 ```
 - Modo de fugir - A formiga entra neste modo assim que o jogador chega na zona de perigo, onde ele ganha velocidade e vai estar sempre a afastar-se do jogador até este se encontar longe dela;
-  ```csharp
+-   ```csharp
    private void RunAwayState(GameTime gameTime)
     {
       LookAwayFrom(_mousePosition);
@@ -826,7 +826,7 @@ namespace TheTirelessLilAnt.GameEntitites
         _currentStateAction = WaitState;
       }
     }
-   ```
+ ```
 
 - Zona de perigo - se o rato do Jogador se encontrar perto da formiga e esta o detetar a formiga irá ganhar velocidade e começar fugir, sendo essa área a de perigo;
 ```csharp
