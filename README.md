@@ -110,4 +110,217 @@ Possui métodos que nos permitem adicionar novos objetos ao jogo, atualizar o se
         void UnloadObjects();
         void LoadObjects(ContentManager contentManager);
 ```
-##
+# Classes
+## BaseGameObject
+```csharp
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+
+namespace TheTirelessLilAnt.Components
+{
+  public abstract class BaseGameObject : IGameObject
+  {
+    /// <summary>
+    /// Position of the object on the screen represint by a single point.
+    /// </summary>
+    public Vector2 Position { get; set; }
+
+    /// <summary>
+    /// Velocity with the entity is moving on the screen.
+    /// </summary>
+    public Vector2 Velocity { get; set; }
+
+    /// <summary>
+    /// Direction of object movement.
+    /// </summary>
+    public Vector2 Direction { get; set; }
+
+    /// <summary>
+    /// The texture drawn on the screen.
+    /// </summary>
+    protected Texture2D Texture { get; set; }
+
+    /// <summary>
+    /// The height of the drawn texture.
+    /// </summary>
+    public int Height => Texture is null ? 0 : Texture.Height;
+
+    /// <summary>
+    /// The width of the drawn texture.
+    /// </summary>
+    public int Width => Texture is null ? 0 : Texture.Width;
+
+    /// <summary>
+    /// Determines if the object is visible on the screen.
+    /// </summary>
+    public bool Visible { get; set; }
+
+    /// <summary>
+    /// The pivot used for rotation. 
+    /// </summary>
+    public Vector2 Origin { get; set; }
+
+    /// <summary>
+    /// The angle at which the texture is rotated.
+    /// </summary>
+    public float Rotation { get; set; }
+
+    /// <summary>
+    /// Called evey frame. Incoporated the logic for the entity.
+    /// </summary>
+    /// <param name="gameTime"></param>
+    public abstract void Update(GameTime gameTime);
+
+    /// <summary>
+    /// Initialize the proprieties values with the common ones used.
+    /// </summary>
+    private void InitValues()
+    {
+      Direction = Vector2.Zero;
+      Position = Vector2.Zero;
+      Velocity = Vector2.Zero;
+      Visible = true;
+      Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
+    }
+
+    /// <summary>
+    /// Draws the given texture with the specified proprieties.
+    /// </summary>
+    /// <param name="spriteBatch"></param>
+    public virtual void Draw(SpriteBatch spriteBatch)
+    {
+      spriteBatch.Draw(Texture,
+                       new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height),
+                       null,
+                       Color.White,
+                       Rotation,
+                       Origin,
+                       SpriteEffects.None,
+                       0);
+    }
+
+    public BaseGameObject(Texture2D texture)
+    {
+      Texture = texture;
+      InitValues();
+    }
+
+    /// <summary>
+    /// Used for handle user input.
+    /// </summary>
+    public virtual void HandleInput()
+    {
+    }
+
+    /// <summary>
+    /// Loads the resources used by an entity.
+    /// </summary>s
+    public virtual void LoadContent(ContentManager contentManager)
+    {
+
+    }
+
+    /// <summary>
+    /// Unloads the content.
+    /// </summary>
+    public virtual void UnloadContent()
+    {
+    }
+  }
+}
+```
+BaseGameObject é uma classe abstrata que implementa a interface IGameObject e fornece uma implementação básica e comum para todos os objetos do jogo.
+Ela define propriedades essenciais como posição, velocidade, direção, rotação, ponto de origem, visibilidade e o tamanho do sprite, além de permitir a manipulação do sprite associado ao objeto. Inclui também métodos para atualizar, desenhar, carregar, descarregar e lidar com interações do usuário.
+
+## Game Manager
+```csharp
+﻿using ExampleGame;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TheTirelessLilAnt.Components
+{
+    public class GameManager : IGameManager
+    {
+        private List<IGameObject> _objects;
+
+        /// <summary>
+        /// Lists of all object in the game. 
+        /// </summary>
+        public IEnumerable<IGameObject> GameObjects => _objects;
+        
+
+        public GameManager()
+        {
+            _objects = new List<IGameObject>();
+        }
+
+        /// <summary>
+        /// Adds an new entity to the game objects collection. 
+        /// </summary>
+        /// <param name="gameObject"></param>
+        public void AddObject(IGameObject gameObject)
+        {
+            if (gameObject is null) return;
+            _objects.Add(gameObject);
+        }
+        /// <summary>
+        /// Calls the Update() of every visible game object.
+        /// </summary>
+        public void DrawObjects(SpriteBatch spritebatch)
+        {
+            var visibleObjects = GameObjects.Where(gameObject => gameObject.Visible);
+            foreach (IGameObject gameObject in visibleObjects)
+            {
+                gameObject.Draw(spritebatch);
+            }
+        }
+
+        /// <summary>
+        /// Calls the Update() of every game objects. 
+        /// </summary>
+        public void UpdateObjects(GameTime gameTime)
+        {
+            foreach (IGameObject gameObject in GameObjects)
+            {
+                gameObject.HandleInput();
+                gameObject.Update(gameTime);
+            }
+        }
+
+        /// <summary>
+        /// Unloads the content of the game objects.
+        /// </summary>
+        public void UnloadObjects()
+        {
+            foreach (IGameObject gameObject in GameObjects)
+            {
+                gameObject.UnloadContent();
+            }
+        }
+
+        /// <summary>
+        /// Loads resources of every game object.
+        /// </summary>
+        public void LoadObjects(ContentManager contentManager)
+        {
+            foreach (IGameObject gameObject in GameObjects)
+            {
+                gameObject.LoadContent(contentManager);
+            }
+        }       
+    }
+}
+```
+A classe abstrata GameManager implementa a interface IGameManager e gerencia a lista de objetos do jogo. Ela mantém uma lista de objetos do tipo IGameObject e utiliza métodos para adicionar, atualizar, desenhar, carregar e descarregar esses objetos.
+A classe permite organizar o comportamento de todos os objetos do jogo ao mesmo tempo, realizando as atualizações e renderizações de acordo com as condições definidas. Além disso, ela assegura que todos os objetos visíveis sejam desenhados na tela e permite que os recursos sejam carregados e descarregados corretamente.
+
+
