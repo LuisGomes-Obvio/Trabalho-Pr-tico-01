@@ -326,6 +326,40 @@ namespace TheTirelessLilAnt.Components
 }
 ```
 
+# Math
+
+A classe “Maths.cs” vai adicionar um novo comando à livraria “TheTirelessLilAnt.Components” chamado “Maths.ManhattanDistance()” que permite calcular a distância Manhattan entre dois pontos dados.
+
+A distância Manhattan é a distância entre dois pontos num plano que é calculada ao somar a diferença x e a diferenca y dos dois pontos.
+
+Esta vai permitir ao jogo saber a que distância da formiga o rato do Jogador está, e tomar as decisões certas em função do valor retornado.
+
+```csharp
+using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TheTirelessLilAnt.Components
+{
+    static class Maths
+    {
+        /// <summary>
+        /// Calculates the Manhattan distance between two points in plane.
+        /// </summary>
+        /// <param name="pointA">The given point A in plane</param>
+        /// <param name="pointB">The given point B </param>
+        /// <returns>Manhattan distance between point A and point B.</returns>
+        public static float ManhattanDistance(Vector2 pointA, Vector2 pointB)
+        {
+            return Math.Abs(pointB.X - pointA.X) + Math.Abs(pointB.Y - pointA.Y);
+        }
+    }
+}
+```
+
 # Base Game Objects
 
 ## Home
@@ -852,4 +886,207 @@ private bool EnemyIsInAlertZone()
     }
 ```
 
+#Main
+
+```csharp
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using TheTirelessLilAnt.Components;
+using TheTirelessLilAnt.GameEntitites;
+
+namespace ExampleGame
+{
+    /// <summary>
+    /// This is the main type for your game.
+    /// </summary>
+    public class LilAntGameMain : Game
+    {
+       private GraphicsDeviceManager _graphics;
+       private SpriteBatch _spriteBatch;
+       private IGameManager _gameManager;
+
+       private Rectangle _mainFrame;
+       private Texture2D _backgroundGrassTexture; 
+
+       private  Home _antHome;
+       private  Leaf _leaf;
+       private  LilAnt _lilAnt;
+
+        public LilAntGameMain()
+        {          
+            _graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+            Window.AllowUserResizing = false;
+
+            _gameManager = new GameManager();
+        }
+
+        /// <summary>
+        /// Allows the game to perform any initialization it needs to before starting to run.
+        /// This is where it can query for any required services and load any non-graphic
+        /// related content.  Calling base.Initialize will enumerate through any components
+        /// and initialize them as well.
+        /// </summary>
+        protected override void Initialize()
+        {
+            base.Initialize();
+            this.IsMouseVisible = true;
+            Window.Title = "Lil Ant";
+            _graphics.PreferredBackBufferHeight = 720;
+            _graphics.PreferredBackBufferWidth = 1024;
+            _graphics.ApplyChanges();
+            _mainFrame =  new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+        }
+
+        /// <summary>
+        /// LoadContent will be called once per game and is the place to load
+        /// all of your content.
+        /// </summary>
+        protected override void LoadContent()
+        { 
+            var anteater = Content.Load<Texture2D>("anteater");
+            var leaftexture = Content.Load<Texture2D>("leaf");
+            var homeTexture = Content.Load<Texture2D>("home");
+            var antTexture = Content.Load<Texture2D>("ant80");
+            _backgroundGrassTexture = Content.Load<Texture2D>("ground");
+
+            _leaf = new Leaf(leaftexture, 1024, 720);
+            _antHome = new Home(homeTexture, 1024, 720);
+            _lilAnt = new LilAnt(antTexture, new Vector2(100, 100))
+                             .AddHome(_antHome)
+                             .AddLeaf(_leaf);
+
+            _gameManager.AddObject(_lilAnt);
+            _gameManager.AddObject(_leaf);
+            _gameManager.AddObject(_antHome);
+
+            Mouse.SetCursor(MouseCursor.FromTexture2D(anteater, 40, 40));
+
+            // Create a new SpriteBatch, which can be used to draw textures.
+            _spriteBatch = new SpriteBatch(GraphicsDevice);  
+            _gameManager.LoadObjects(Content);
+        }
+
+        /// <summary>
+        /// UnloadContent will be called once per game and is the place to unload
+        /// game-specific content.
+        /// </summary>
+        protected override void UnloadContent()
+        {
+            _gameManager.UnloadObjects();
+        }
+
+        /// <summary>
+        /// Allows the game to run logic such as updating the world,
+        /// checking for collisions, gathering input, and playing audio.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        protected override void Update(GameTime gameTime)
+        {
+            _gameManager.UpdateObjects(gameTime);
+
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Exit();
+
+            base.Update(gameTime);
+        }
+
+        /// <summary>
+        /// This is called when the game should draw itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+            _spriteBatch.Begin();           
+            _spriteBatch.Draw(_backgroundGrassTexture, _mainFrame, Color.White);
+            _gameManager.DrawObjects(_spriteBatch);
+            _spriteBatch.End();
+
+            base.Draw(gameTime);
+        }
+    }
+}
+```
+A classe “LilAntGameMain.cs” é a classe que vai inicializar, construir e desenhar o jogo. Para isso, começa por fazer o construtor do jogo ao criar o gestor gráfico, definir o caminho para o ficheiro com o conteúdo do jogo, e criar o gestor do jogo que vai gerir todos os objetos do jogo (folha, formiga, etc…).
+```csharp
+public LilAntGameMain()
+{          
+    _graphics = new GraphicsDeviceManager(this);
+    Content.RootDirectory = "Content";
+    Window.AllowUserResizing = false;
+
+    _gameManager = new GameManager();
+}
+```
+Adicionalmente, vai impedir o utilizador de redimensionar a janela do jogo ```csharp Window.AllowUserResizing = false;```
+
+De seguida, vai fazer algumas inicializações que são precisas para assegurar o bom funcionamento do programa e uma boa experiência para o jogador.
+```csharp
+protected override void Initialize()
+{
+    base.Initialize();
+    this.IsMouseVisible = true;
+    Window.Title = "Lil Ant";
+    _graphics.PreferredBackBufferHeight = 720;
+    _graphics.PreferredBackBufferWidth = 1024;
+    _graphics.ApplyChanges();
+    _mainFrame =  new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+}
+```
+
+Depois, vai carregar as texturas do jogo, criar os vários elementos do jogo (folha, formiga e casa), e aplicar a textura de um papa-formigas ao cursor do rato.
+```csharp
+protected override void LoadContent()
+{ 
+    var anteater = Content.Load<Texture2D>("anteater");
+    var leaftexture = Content.Load<Texture2D>("leaf");
+    var homeTexture = Content.Load<Texture2D>("home");
+    var antTexture = Content.Load<Texture2D>("ant80");
+    _backgroundGrassTexture = Content.Load<Texture2D>("ground");
+
+    _leaf = new Leaf(leaftexture, 1024, 720);
+    _antHome = new Home(homeTexture, 1024, 720);
+    _lilAnt = new LilAnt(antTexture, new Vector2(100, 100))
+                     .AddHome(_antHome)
+                     .AddLeaf(_leaf);
+
+    _gameManager.AddObject(_lilAnt);
+    _gameManager.AddObject(_leaf);
+    _gameManager.AddObject(_antHome);
+
+    Mouse.SetCursor(MouseCursor.FromTexture2D(anteater, 40, 40));
+
+    // Create a new SpriteBatch, which can be used to draw textures.
+    _spriteBatch = new SpriteBatch(GraphicsDevice);  
+    _gameManager.LoadObjects(Content);
+}
+```
+
+Para terminar, vai atualizar os objetos do jogo anteriormente carregados, e verificar se o jogador deseja sair do jogo na funcao “Update()”,  e desenhar as texturas e GameObjects anteriormente carregados no ecrã.
+```csharp
+protected override void Update(GameTime gameTime)
+{
+    _gameManager.UpdateObjects(gameTime);
+
+    if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+        Exit();
+
+    base.Update(gameTime);
+}
+```
+```csharp
+protected override void Draw(GameTime gameTime)
+{
+    GraphicsDevice.Clear(Color.CornflowerBlue);
+    _spriteBatch.Begin();           
+    _spriteBatch.Draw(_backgroundGrassTexture, _mainFrame, Color.White);
+    _gameManager.DrawObjects(_spriteBatch);
+    _spriteBatch.End();
+
+    base.Draw(gameTime);
+}
+```
 
