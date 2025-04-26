@@ -323,4 +323,89 @@ namespace TheTirelessLilAnt.Components
 A classe abstrata GameManager implementa a interface IGameManager e gerencia a lista de objetos do jogo. Ela mantém uma lista de objetos do tipo IGameObject e utiliza métodos para adicionar, atualizar, desenhar, carregar e descarregar esses objetos.
 A classe permite organizar o comportamento de todos os objetos do jogo ao mesmo tempo, realizando as atualizações e renderizações de acordo com as condições definidas. Além disso, ela assegura que todos os objetos visíveis sejam desenhados na tela e permite que os recursos sejam carregados e descarregados corretamente.
 
+# Base Game Objects
+
+## Home
+A casa (Home) é um Base Game Object e serve como base para a formiga guardar folhas, sendo esta estática e encontra-se no canto inferior direito do mapa.
+```csharp
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using TheTirelessLilAnt.Components;
+
+namespace TheTirelessLilAnt.GameEntitites
+{
+  public class Home : BaseGameObject
+  {
+    public Home(Texture2D texture, int maxWidth, int maxHeight) : base(texture)
+    {
+      //The Home object will have static position on the corner of the screen.
+      var posX = maxWidth - Width / 2;
+      var posY = maxHeight - Height / 2;
+      Position = new Vector2(posX, posY);
+    }
+
+    //Saddly enough, the home have nothing to update :( 
+    public override void Update(GameTime gameTime)
+    {
+    }
+  }
+}
+```
+## Leaf
+A folha (Leaf) é um Base Game Object e serve como pontos para a formiga sendo que assim que esta é coletada pela formiga (a formiga leva a para a casa) uma nova irá ser criada no mapa, sendo a sua localização sempre aleatória.
+
+```csharp
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using TheTirelessLilAnt.Components;
+
+namespace TheTirelessLilAnt.GameEntitites
+{
+    class Leaf : BaseGameObject
+    {
+        private Random _rand;
+        private int _maxWidth;
+        private int _maxHeight;
+
+        public Leaf(Texture2D texture, int maxWidth, int maxHeight): base(texture)
+        {
+            _maxWidth = maxWidth;
+            _maxHeight = maxHeight;
+            _rand = new Random();
+            RandomizePosition();
+        }
+
+        /// <summary>
+        /// Called everytime when the Leafs needs to be drawn.
+        /// </summary>
+        public override void Draw(SpriteBatch spritebatch)
+        {
+            base.Draw(spritebatch);
+        }
+
+
+        public override void Update(GameTime gameTime)
+        {
+           
+        }
+
+        /// <summary>
+        /// Gets a random position for the leaf. 
+        /// The position will be randomize above the main diagonal of the screen.
+        /// </summary>
+        public void RandomizePosition()
+        {
+            var newY = _rand.Next(Height /2 , _maxHeight - Height / 2);
+            var newX = _rand.Next(0, Math.Min(newY, _maxWidth)) +Width / 2;
+            Position = new Vector2(newX, newY);
+            Rotation = (float)(_rand.Next() % (3 * Math.PI));
+        }
+    }
+}
+```
+
+
+
+
 
