@@ -49,15 +49,65 @@ namespace TheTirelessLilAnt
 ```
 
 IGameObject é uma interface que permite, individualmente, atribuir a todos os objetos do uma jogo os mesmos tipos de características representados em baixo:
--Posição;    ```csharp   Vector2 Position { get; set; } ```
--Velocidade;    ```Vector2 Velocity { get; set; }```
--Direção;    ```Vector2 Direction { get; set; } ```
--Rotação;    ```float Rotation { get;} ```
--Ponto de Origem;    ```Vector2 Origin { get; set; } ```
--Tamanho do Sprite;   ```int Height { get; } 
+- Posição;    ```csharp   Vector2 Position { get; set; } ```
+- Velocidade;    ```Vector2 Velocity { get; set; }```
+- Direção;    ```Vector2 Direction { get; set; } ```
+- Rotação;    ```float Rotation { get;} ```
+- Ponto de Origem;    ```Vector2 Origin { get; set; } ```
+- Tamanho do Sprite;   ```int Height { get; } 
                           int Width { get; }```
--Visibilidade;    ```bool Visible { get; set; }```
+- Visibilidade;    ```bool Visible { get; set; }```
 
 Além disso possui uma série de métodos ou instruções que permitem carregar conteúdos, atualizar o estado dos objetos, desenhá-los no ecrã e lidar com comandos do jogador.
+```csharp
+        void HandleInput();
+        void Update(GameTime time);
+        void Draw(SpriteBatch spriteBatch);
+        void LoadContent(ContentManager contentManager);
+        void UnloadContent();
+```
 
 Isto facilita a organização do código e permite que os objetos do jogo funcionem de uma maneira consistente.
+
+## IGameManager
+
+```csharp
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TheTirelessLilAnt.Components
+{
+    public interface IGameManager
+    {
+        IEnumerable<IGameObject> GameObjects { get; }
+
+        void AddObject(IGameObject gameObject);
+
+        void UpdateObjects(GameTime gameTime);
+        void DrawObjects(SpriteBatch spritebatch);
+        void UnloadObjects();
+        void LoadObjects(ContentManager contentManager);
+    }
+}
+```
+Distintamente da interface anterior, esta utiliza a interface IGameObject para criar uma lista de objetos e fazer a gestão de cada um deles.
+Enquanto a IGameObject é uma interface que define o comportamento individual de cada objeto, a IGameManager permite organizar e controlar vários objetos ao mesmo tempo.
+
+Possui métodos que nos permitem adicionar novos objetos ao jogo, atualizar o seu estado a cada frame, desenhá-los no ecrã, carregar os seus conteúdos e libertar os recursos quando já não forem necessários.
+```csharp
+  IEnumerable<IGameObject> GameObjects { get; }
+
+        void AddObject(IGameObject gameObject);
+
+        void UpdateObjects(GameTime gameTime);
+        void DrawObjects(SpriteBatch spritebatch);
+        void UnloadObjects();
+        void LoadObjects(ContentManager contentManager);
+```
+##
