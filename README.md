@@ -48,7 +48,7 @@ namespace TheTirelessLilAnt
 }
 ```
 
-IGameObject é uma interface que permite, individualmente, atribuir a todos os objetos do uma jogo os mesmos tipos de características representados em baixo:
+IGameObject é uma interface que permite, individualmente, atribuir a todos os objetos do uma jogo os mesmos tipos de características representadas em baixo:
 - Posição;    ```csharp   Vector2 Position { get; set; } ```
 - Velocidade;    ```Vector2 Velocity { get; set; }```
 - Direção;    ```Vector2 Direction { get; set; } ```
@@ -96,7 +96,7 @@ namespace TheTirelessLilAnt.Components
     }
 }
 ```
-Distintamente da interface anterior, esta utiliza a interface IGameObject para criar uma lista de objetos e fazer a gestão de cada um deles.
+Ao contrário da interface anterior, esta utiliza a interface IGameObject para criar uma lista de objetos e fazer a gestão de cada um deles.
 Enquanto a IGameObject é uma interface que define o comportamento individual de cada objeto, a IGameManager permite organizar e controlar vários objetos ao mesmo tempo.
 
 Possui métodos que nos permitem adicionar novos objetos ao jogo, atualizar o seu estado a cada frame, desenhá-los no ecrã, carregar os seus conteúdos e libertar os recursos quando já não forem necessários.
@@ -113,7 +113,7 @@ Possui métodos que nos permitem adicionar novos objetos ao jogo, atualizar o se
 # Classes
 ## BaseGameObject
 BaseGameObject é uma classe abstrata que implementa a interface IGameObject e fornece uma implementação comum para todos os objetos do jogo.
-Ela define propriedades ou características essenciais como posição, velocidade, direção, rotação, ponto de origem, visibilidade e o tamanho do sprite, além de permitir a manipulação do sprite associado ao objeto. 
+Ela define as propriedades ou características essenciais de cada objeto como posição, velocidade, direção, rotação, ponto de origem, visibilidade e o tamanho do sprite, assim como permite a manipulação do sprite associado ao objeto. 
 
 ```csharp
 using Microsoft.Xna.Framework;
@@ -188,7 +188,7 @@ namespace TheTirelessLilAnt.Components
       Origin = new Vector2(Texture.Width / 2, Texture.Height / 2);
     }
 ```
-Inclui também métodos para atualizar, desenhar, carregar, descarregar e lidar com interações do usuário.
+Inclui também métodos para atualizar, desenhar, carregar, descarregar e lidar com interações do jogador.
 ```csharp
     /// <summary>
     /// Draws the given texture with the specified proprieties.
@@ -237,8 +237,8 @@ Inclui também métodos para atualizar, desenhar, carregar, descarregar e lidar 
 }
 ```
 ## Game Manager
-A classe abstrata GameManager implementa a interface IGameManager e gerencia a lista de objetos do jogo. Ela mantém uma lista de objetos do tipo IGameObject e utiliza métodos para adicionar, atualizar, desenhar, carregar e descarregar esses objetos.
-A classe permite organizar o comportamento de todos os objetos do jogo ao mesmo tempo, realizando as atualizações e renderizações de acordo com as condições definidas. Além disso, ela assegura que todos os objetos visíveis sejam desenhados na tela e permite que os recursos sejam carregados e descarregados corretamente.
+A classe abstrata GameManager implementa a interface IGameManager e gere a lista de objetos do jogo. Ela possui uma lista de objetos do tipo IGameObject e utiliza métodos para adicionar, atualizar, desenhar, carregar e descarregar esses objetos.
+Ela permite organizar o comportamento de todos os objetos do jogo ao mesmo tempo, realizando as atualizações e renderizações de acordo com as condições definidas, ela assegura que todos os objetos visíveis sejam desenhados na tela e que sejam carregados e descarregados corretamente.
 
 ```csharp
 ﻿using ExampleGame;
@@ -1021,7 +1021,7 @@ public LilAntGameMain()
     _gameManager = new GameManager();
 }
 ```
-Adicionalmente, vai impedir o utilizador de redimensionar a janela do jogo ```csharp Window.AllowUserResizing = false;```
+Adicionalmente, vai impedir o utilizador de redimensionar a janela do jogo ```Window.AllowUserResizing = false;```
 
 De seguida, vai fazer algumas inicializações que são precisas para assegurar o bom funcionamento do programa e uma boa experiência para o jogador.
 ```csharp
