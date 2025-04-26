@@ -326,7 +326,7 @@ namespace TheTirelessLilAnt.Components
 }
 ```
 
-# Math
+# Maths
 
 A classe “Maths.cs” vai adicionar um novo comando à livraria “TheTirelessLilAnt.Components” chamado “Maths.ManhattanDistance()” que permite calcular a distância Manhattan entre dois pontos dados.
 
@@ -886,7 +886,7 @@ private bool EnemyIsInAlertZone()
     }
 ```
 
-#Main
+# Main
 
 ```csharp
 using Microsoft.Xna.Framework;
