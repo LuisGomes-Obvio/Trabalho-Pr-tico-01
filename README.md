@@ -113,7 +113,7 @@ Possui métodos que nos permitem adicionar novos objetos ao jogo, atualizar o se
 # Classes
 ## BaseGameObject
 BaseGameObject é uma classe abstrata que implementa a interface IGameObject e fornece uma implementação básica e comum para todos os objetos do jogo.
-Ela define propriedades essenciais como posição, velocidade, direção, rotação, ponto de origem, visibilidade e o tamanho do sprite, além de permitir a manipulação do sprite associado ao objeto. Inclui também métodos para atualizar, desenhar, carregar, descarregar e lidar com interações do usuário.
+Ela define propriedades ou características essenciais como posição, velocidade, direção, rotação, ponto de origem, visibilidade e o tamanho do sprite, além de permitir a manipulação do sprite associado ao objeto. Inclui também métodos para atualizar, desenhar, carregar, descarregar e lidar com interações do usuário.
 
 ```csharp
 using Microsoft.Xna.Framework;
