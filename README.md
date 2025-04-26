@@ -112,6 +112,9 @@ Possui métodos que nos permitem adicionar novos objetos ao jogo, atualizar o se
 ```
 # Classes
 ## BaseGameObject
+BaseGameObject é uma classe abstrata que implementa a interface IGameObject e fornece uma implementação básica e comum para todos os objetos do jogo.
+Ela define propriedades essenciais como posição, velocidade, direção, rotação, ponto de origem, visibilidade e o tamanho do sprite, além de permitir a manipulação do sprite associado ao objeto. Inclui também métodos para atualizar, desenhar, carregar, descarregar e lidar com interações do usuário.
+
 ```csharp
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -231,10 +234,10 @@ namespace TheTirelessLilAnt.Components
   }
 }
 ```
-BaseGameObject é uma classe abstrata que implementa a interface IGameObject e fornece uma implementação básica e comum para todos os objetos do jogo.
-Ela define propriedades essenciais como posição, velocidade, direção, rotação, ponto de origem, visibilidade e o tamanho do sprite, além de permitir a manipulação do sprite associado ao objeto. Inclui também métodos para atualizar, desenhar, carregar, descarregar e lidar com interações do usuário.
-
 ## Game Manager
+A classe abstrata GameManager implementa a interface IGameManager e gerencia a lista de objetos do jogo. Ela mantém uma lista de objetos do tipo IGameObject e utiliza métodos para adicionar, atualizar, desenhar, carregar e descarregar esses objetos.
+A classe permite organizar o comportamento de todos os objetos do jogo ao mesmo tempo, realizando as atualizações e renderizações de acordo com as condições definidas. Além disso, ela assegura que todos os objetos visíveis sejam desenhados na tela e permite que os recursos sejam carregados e descarregados corretamente.
+
 ```csharp
 ﻿using ExampleGame;
 using Microsoft.Xna.Framework;
@@ -320,8 +323,6 @@ namespace TheTirelessLilAnt.Components
     }
 }
 ```
-A classe abstrata GameManager implementa a interface IGameManager e gerencia a lista de objetos do jogo. Ela mantém uma lista de objetos do tipo IGameObject e utiliza métodos para adicionar, atualizar, desenhar, carregar e descarregar esses objetos.
-A classe permite organizar o comportamento de todos os objetos do jogo ao mesmo tempo, realizando as atualizações e renderizações de acordo com as condições definidas. Além disso, ela assegura que todos os objetos visíveis sejam desenhados na tela e permite que os recursos sejam carregados e descarregados corretamente.
 
 # Base Game Objects
 
@@ -404,8 +405,14 @@ namespace TheTirelessLilAnt.GameEntitites
     }
 }
 ```
+## Ant
+A formiga (Ant) é um Base Game Object e o alvo principal do jogador, esta possui várias ações e mecânicas: 
+- Modo de espera - A formiga fica parada à espera a observar o rato do jogador se este estiver perto ela entra no modo de fugir, caso contrário depois de 1.2 segundos ela entra no modo procurar a folha;
+
+```csharp
 
 
+```
 
 
 
