@@ -411,6 +411,8 @@ namespace TheTirelessLilAnt.GameEntitites
 A formiga (Ant) é um Base Game Object e o alvo principal do jogador, esta possui várias ações e mecânicas: 
 <details>
     <summary>Clique aqui para ver a função completa</summary>
+    
+```csharp 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -745,11 +747,12 @@ namespace TheTirelessLilAnt.GameEntitites
     }
     #endregion Private Methods
   }
-
 }
+```
 </details>
 - Modo procurar a folha - faz com que a formiga entre em modo de espera mas ao invés de olhar para o rato do jogador ela irá olhar para a folha, caso o rato do jogador se encontre perto dela ela irá entrar no modo de fugir;
-  ```csharp
+
+```csharp
    private void FindLeafState(GameTime gameTime)
     {
       LookAt(_leaf.Position);
@@ -770,7 +773,7 @@ namespace TheTirelessLilAnt.GameEntitites
         _currentStateAction = GoHomeState;
       }
     }
-  ```
+ ```
   
 - Modo de ir para casa - Após encontrar a folha e alcançá-la a formiga volta para casa armazenar a folha assim ganhando um ponto, se esta vir o jogador está perto,  ela ganha velocidade;
   ```csharp
@@ -823,8 +826,8 @@ namespace TheTirelessLilAnt.GameEntitites
         _currentStateAction = WaitState;
       }
     }
+   ```
 
-  ```
 - Zona de perigo - se o rato do Jogador se encontrar perto da formiga e esta o detetar a formiga irá ganhar velocidade e começar fugir, sendo essa área a de perigo;
 ```csharp
 private bool EnemyIsInDangerZone()
@@ -835,8 +838,8 @@ private bool EnemyIsInDangerZone()
       }
       return false;
     }
-
 ```
+
 - Zona de alerta - se a formiga já estiver a fugir e o jogador aproximar ainda mais o rato ela não irá parar de correr;
 ```csharp
 private bool EnemyIsInAlertZone()
