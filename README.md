@@ -112,8 +112,8 @@ Possui métodos que nos permitem adicionar novos objetos ao jogo, atualizar o se
 ```
 # Classes
 ## BaseGameObject
-BaseGameObject é uma classe abstrata que implementa a interface IGameObject e fornece uma implementação básica e comum para todos os objetos do jogo.
-Ela define propriedades ou características essenciais como posição, velocidade, direção, rotação, ponto de origem, visibilidade e o tamanho do sprite, além de permitir a manipulação do sprite associado ao objeto. Inclui também métodos para atualizar, desenhar, carregar, descarregar e lidar com interações do usuário.
+BaseGameObject é uma classe abstrata que implementa a interface IGameObject e fornece uma implementação comum para todos os objetos do jogo.
+Ela define propriedades ou características essenciais como posição, velocidade, direção, rotação, ponto de origem, visibilidade e o tamanho do sprite, além de permitir a manipulação do sprite associado ao objeto. 
 
 ```csharp
 using Microsoft.Xna.Framework;
@@ -815,7 +815,7 @@ namespace TheTirelessLilAnt.GameEntitites
 
 ```
 - Modo de fugir - A formiga entra neste modo assim que o jogador chega na zona de perigo, onde ele ganha velocidade e vai estar sempre a afastar-se do jogador até este se encontar longe dela;
--   ```csharp
+```csharp
    private void RunAwayState(GameTime gameTime)
     {
       LookAwayFrom(_mousePosition);
@@ -826,7 +826,7 @@ namespace TheTirelessLilAnt.GameEntitites
         _currentStateAction = WaitState;
       }
     }
- ```
+```
 
 - Zona de perigo - se o rato do Jogador se encontrar perto da formiga e esta o detetar a formiga irá ganhar velocidade e começar fugir, sendo essa área a de perigo;
 ```csharp
