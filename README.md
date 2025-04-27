@@ -951,7 +951,7 @@ Para que todos estes modos sejam possiveis, foram criados vários métodos que p
     }
 
 ```
-- Fazer com que a formiga olhe na direção opotas de um ponto específico;
+- Fazer com que a formiga olhe na direção oposta de um ponto específico;
 ```csharp
     /// <summary>
     /// Rotates the Ant facing away from a certain point.
