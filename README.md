@@ -886,6 +886,131 @@ private bool EnemyIsInAlertZone()
     }
 ```
 
+Para que todos estes modos sejam possiveis, foram criados vários métodos que permitem as seguintes ações:
+
+- Saber para onde a formiga está a olhar;
+```csharp
+/// <summary>
+    /// Sets the point at which the Ant will be looking at.
+    /// </summary>
+    private void LookAt(Vector2 point)
+    {
+      Direction = point - Position;
+      Rotation = (float)(RotateAwayFrom(point) - Math.PI);
+    }
+```
+- Fazer com que a formiga olhe na direção oposta;
+```csharp
+   /// <summary>
+    /// Sets the point at which the Ant will be looking away from.
+    /// </summary>
+    private void LookAwayFrom(Vector2 point)
+    {
+      Direction = Position - point;
+      Rotation = RotateAwayFrom(point);
+    }
+```
+- Abrandar a formiga;
+```csharp
+    /// <summary>
+    /// Slows the Ant movement everytime it is called. 
+    /// </summary>
+    private void ApplyFriction()
+    {
+      Velocity *= 0.97f;
+    }
+
+```
+- Verificar se o rato está na zona de perigo;
+```csharp
+    /// <summary>
+    /// Checks if the mouse cursor is the danger zone.
+    /// </summary>
+    private bool EnemyIsInDangerZone()
+    {
+      if (Maths.ManhattanDistance(Position, _mousePosition) <= DangerDistance)
+      {
+        return true;
+      }
+      return false;
+    }
+
+```
+- Verificar se o rato está na zona de alerta;
+```csharp
+    /// <summary>
+    /// Checks if the mouse cursor is the alert zone.
+    /// </summary>
+    private bool EnemyIsInAlertZone()
+    {
+      if (Maths.ManhattanDistance(Position, _mousePosition) <= AlertZone)
+      {
+        return true;
+      }
+      return false;
+    }
+
+```
+- Fazer com que a formiga olhe na direção opotas de um ponto específico;
+```csharp
+    /// <summary>
+    /// Rotates the Ant facing away from a certain point.
+    /// </summary>
+    /// <param name="enemy">The given point.</param>
+    /// <returns>The new rotation of the texture. </returns>
+    private float RotateAwayFrom(Vector2 enemy)
+    {
+      return (float)Math.Atan2(enemy.Y - Position.Y, enemy.X - Position.X) + (float)Math.PI;
+    }
+```
+- Garantir que a formiga permaneça na tela;
+```csharp
+    /// <summary>
+    /// Keeps the Ant in the screen.
+    /// The Ant will be intentionally allowed to be half hidden in the margin. 
+    /// </summary>
+    /// <param name="spriteBatch"></param>
+    private void KeepInScreen(SpriteBatch spriteBatch)
+    {
+      var maxWidth = spriteBatch.GraphicsDevice.Viewport.Width;
+      var maxHeight = spriteBatch.GraphicsDevice.Viewport.Height;
+
+      if (Position.X < 0) Position = new Vector2(0, Position.Y);
+      if (Position.X > maxWidth) Position = new Vector2(maxWidth, Position.Y);
+      if (Position.Y < 0) Position = new Vector2(Position.X, 0);
+      if (Position.Y > maxHeight) Position = new Vector2(Position.X, maxHeight);
+    }
+```
+- Agarrar a folha;
+```csharp
+    /// <summary>
+    /// Will attach the leaf to the Ant.
+    /// </summary>
+    private void GrabLeaf()
+    {
+      _leaf.Rotation = Rotation;
+
+      var newX = Position.X + Width / 2 + _leaf.Width / 2 - 50;
+      var newY = Position.Y - Height / 2 - _leaf.Height / 2 + 65;
+      _leaf.Position = new Vector2(newX, newY);
+    }
+```
+- Escrever os estados da formiga;
+```csharp
+    /// <summary>
+    /// Maps the boring states to some funny representation to be displayed to the user.
+    /// </summary>
+    private void MapStateToFunnyString()
+    {
+      _statesToFunnyString = new Dictionary<string, string>
+           {
+               {"GoHomeState", "going home"},
+               {"WaitState","waiting"},
+               {"RunAwayState","running awaay. You dont catch her" },
+               {"FindLeafState", "gathering leafs" },
+           };
+    }
+```
 # Main
 
 ```csharp
