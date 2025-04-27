@@ -18,10 +18,10 @@ Repositório do jogo: https://github.com/itivadar/LilAnt-Game
   
 # Organização por pastas
 - Content - Nesta pasta estão presentes todos os ficheiros dos sprites(.png) e fontes(.spritefont) utilizadas neste jogo, para além disso possui o ficheiro Content.mgcb que serve para definir e organizar os recursos que precisam ser processados e convertidos para o formato .xnb,
-- ComponentsInterfaces - Nesta pasta estão presentes as duas interfaces, "IGameObject.cs" e "IGameManager.cs", elas vão ser implementadas nas classes do programa e vão permitir a definição das propriedadas de cada objeto assim como a gestão de cada um.
-- Components - Esta pasta possui as classes com as interfaces implementadas, "BaseGameObject.cs", "GameManager.cs", elas criam os objetos do jogo e fazem a gestão dele. Além disso existe a classe "Maths.cs" que permite saber a distância entre a formiga e o jogador.
+- ComponentsInterfaces - Nesta pasta estão presentes as duas interfaces, "IGameObject.cs" e "IGameManager.cs". Elas vão ser implementadas em certas classes do programa e vão permitir a definição das propriedadas de cada objeto assim como a gestão de cada um.
+- Components - Esta pasta contém as classes com as interfaces implementadas, como "BaseGameObject.cs" e "GameManager.cs". Elas criam os objetos do jogo e fazem a gestão dos mesmos. Além disso, existe a classe "Maths.cs", que permite calcular a distância entre a formiga e o jogador.
 - GameEntities - Aqui estão presentes os ficheiros com todas as classes das entidades ou Base Game Objects do jogo ("Leaf.cs", "Home.cs", "LilAnt.cs"), com as suas propriedades e ações definidas.
-- Properties - Contem o ficheiro "AssemblyInfo.cs" gerado automaticamente, serve para armazenar informações sobre o projeto.
+- Properties - Contem o ficheiro "AssemblyInfo.cs" gerado automaticamente, que serve para armazenar informações sobre o projeto.
 - Screens - É uma pasta adicional com screenshots do jogo e um diagrama que explica o comportamento da formiga.
 
 
@@ -247,7 +247,7 @@ Inclui também métodos para atualizar, desenhar, carregar, descarregar e lidar 
 }
 ```
 ## Game Manager
-A classe abstrata GameManager implementa a interface IGameManager e gere a lista de objetos do jogo. Ela possui uma lista de objetos do tipo IGameObject e utiliza métodos para adicionar, atualizar, desenhar, carregar e descarregar esses objetos.
+A classe GameManager implementa a interface IGameManager e gere a lista de objetos do jogo. Ela possui uma lista de objetos do tipo IGameObject e utiliza métodos para adicionar, atualizar, desenhar, carregar e descarregar esses objetos.
 Ela permite organizar o comportamento de todos os objetos do jogo ao mesmo tempo, realizando as atualizações e renderizações de acordo com as condições definidas, ela assegura que todos os objetos visíveis sejam desenhados na tela e que sejam carregados e descarregados corretamente.
 
 ```csharp
@@ -399,7 +399,7 @@ namespace TheTirelessLilAnt.GameEntitites
 }
 ```
 ## Leaf
-A folha (Leaf) é um Base Game Object e serve como pontos para a formiga sendo que assim que esta é coletada pela formiga (a formiga leva a para a casa) uma nova irá ser criada no mapa, sendo a sua localização sempre aleatória.
+A classe folha (Leaf) é um Base Game Object e serve como pontos para a formiga sendo que assim que esta é coletada pela formiga (a formiga leva a para a casa) uma nova irá ser criada no mapa, sendo a sua localização sempre aleatória.
 
 ```csharp
 ﻿using Microsoft.Xna.Framework;
@@ -452,7 +452,7 @@ namespace TheTirelessLilAnt.GameEntitites
 }
 ```
 ## Ant
-A formiga (Ant) é um Base Game Object e o alvo principal do jogador, esta possui várias ações e mecânicas: 
+A classe formiga (Ant) é um Base Game Object e o alvo principal do jogador, esta possui várias ações e mecânicas: 
 <details>
     <summary>Clique aqui para ver a função completa</summary>
     
