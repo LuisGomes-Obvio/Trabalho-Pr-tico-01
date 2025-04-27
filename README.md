@@ -931,36 +931,7 @@ Para que todos estes modos sejam possiveis, foram criados vários métodos que p
     }
 
 ```
-- Verificar se o rato está na zona de perigo;
-```csharp
-    /// <summary>
-    /// Checks if the mouse cursor is the danger zone.
-    /// </summary>
-    private bool EnemyIsInDangerZone()
-    {
-      if (Maths.ManhattanDistance(Position, _mousePosition) <= DangerDistance)
-      {
-        return true;
-      }
-      return false;
-    }
 
-```
-- Verificar se o rato está na zona de alerta;
-```csharp
-    /// <summary>
-    /// Checks if the mouse cursor is the alert zone.
-    /// </summary>
-    private bool EnemyIsInAlertZone()
-    {
-      if (Maths.ManhattanDistance(Position, _mousePosition) <= AlertZone)
-      {
-        return true;
-      }
-      return false;
-    }
-
-```
 - Fazer com que a formiga olhe na direção oposta de um ponto específico;
 ```csharp
     /// <summary>
