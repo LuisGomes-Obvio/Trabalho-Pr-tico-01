@@ -1,4 +1,5 @@
-# Trabalho-Pr-tico-01
+# Trabalho-Prático-01
+# LilAnt-Game
 Neste jogo, o jogador assume o papel de um papa-formigas que persegue uma formiga enquanto ela tenta recolher folhas para a sua casa, ao mesmo tempo que tenta evitar o inimigo. O jogador controla o papa-formigas com o cursor do rato e tenta apanhar a formiga, que possui um comportamento automático e é controlada pelo programa, fazendo com que por exemplo ela se mova mais rapidamente caso o papa-formigas se aproxime dela.
 
 # Pré-Requesitos
@@ -14,6 +15,15 @@ Repositório do jogo: https://github.com/itivadar/LilAnt-Game
 - Luís Gomes - 31473
 - Samuel Fernandes - 31470
 - David Barbosa - 31461
+  
+# Organização por pastas
+- Content - Nesta pasta estão presentes todos os ficheiros dos sprites(.png) e fontes(.spritefont) utilizadas neste jogo, para além disso possui o ficheiro Content.mgcb que serve para definir e organizar os recursos que precisam ser processados e convertidos para o formato .xnb,
+- ComponentsInterfaces - Nesta pasta estão presentes as duas interfaces, "IGameObject.cs" e "IGameManager.cs", elas vão ser implementadas nas classes do programa e vão permitir a definição das propriedadas de cada objeto assim como a gestão de cada um.
+- Components - Esta pasta possui as classes com as interfaces implementadas, "BaseGameObject.cs", "GameManager.cs", elas criam os objetos do jogo e fazem a gestão dele. Além disso existe a classe "Maths.cs" que permite saber a distância entre a formiga e o jogador.
+- GameEntities - Aqui estão presentes os ficheiros com todas as classes das entidades ou Base Game Objects do jogo ("Leaf.cs", "Home.cs", "LilAnt.cs"), com as suas propriedades e ações definidas.
+- Properties - Contem o ficheiro "AssemblyInfo.cs" gerado automaticamente, serve para armazenar informações sobre o projeto.
+- Screens - É uma pasta adicional com screenshots do jogo e um diagrama que explica o comportamento da formiga.
+
 
 # Interfaces dos Componentes
 ## IGameObjects
@@ -49,7 +59,7 @@ namespace TheTirelessLilAnt
 ```
 
 IGameObject é uma interface que permite, individualmente, atribuir a todos os objetos do uma jogo os mesmos tipos de características representadas em baixo:
-- Posição;    ```csharp   Vector2 Position { get; set; } ```
+- Posição;    ```Vector2 Position { get; set; } ```
 - Velocidade;    ```Vector2 Velocity { get; set; }```
 - Direção;    ```Vector2 Direction { get; set; } ```
 - Rotação;    ```float Rotation { get;} ```
